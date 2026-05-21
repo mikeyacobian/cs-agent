@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Environment
+.env
+.env.local
+
+# Eval runs (always local, never shared)
+evals/runs/
+
+# Raw research notes (local-only; polished outputs live in product/)
+docs/research-notes/
+
+# Process notes and conversation exports (local-only)
+docs/process-notes/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
