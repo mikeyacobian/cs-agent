@@ -107,5 +107,5 @@ def write_trace(trace: Trace, traces_dir: Path) -> Path:
     ts = trace.timestamp.replace(":", "-").replace(".", "-")
     filename = f"{ts}__{trace.scenario_id}__{trace.run_id[:8]}.json"
     path = traces_dir / filename
-    path.write_text(json.dumps(trace.to_dict(), indent=2, default=str))
+    path.write_text(json.dumps(trace.to_dict(), indent=2, default=str, ensure_ascii=False))
     return path

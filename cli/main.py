@@ -133,7 +133,7 @@ def cmd_run(scenario_id: str) -> int:
         print(f"[run] WARNING: {trace.error}")
     if trace.final_output:
         print(f"[run] Final output:")
-        print(json.dumps(trace.final_output, indent=2))
+        print(json.dumps(trace.final_output, indent=2, ensure_ascii=False))
     print(f"[run] Turns: {len(trace.turns)}, tool calls: {len(trace.tool_invocations)}")
     print(f"[run] Latency: {trace.total_latency_ms}ms")
     if trace.total_input_tokens:
