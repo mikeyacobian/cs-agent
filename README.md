@@ -59,7 +59,7 @@ cp .env.example .env
 #   ANTHROPIC_API_KEY=...  (only if any provider above is claude)
 ```
 
-Defaults are cross-tier within OpenAI (`gpt-4o-mini` agent, `gpt-4o` judge). Mock works with no keys for grader and smoke iteration.
+Defaults are cross-tier within OpenAI (`gpt-4o` agent, `gpt-5` judge): stronger judge over weaker agent, cross-generation for some self-preference bias mitigation. Mock works with no keys for grader and smoke iteration. Cross-vendor judging (Claude judge over OpenAI agent, or vice versa) is one env var change away.
 
 ### Run one scenario
 
@@ -81,7 +81,7 @@ Runs every scenario, applies six graders to each, writes a markdown report to `r
 
 ## On provider abstraction
 
-Every model call (agent and judge) goes through one `ModelProvider` interface with three implementations: OpenAI (real), Mock (real, no API key needed), Claude (stub; production migration path noted in `harness/providers/`). Provider selection via `.env`. The Mock provider exists so the harness can be smoke-tested with zero spend.
+Every model call (agent and judge) goes through one `ModelProvider` interface with three real implementations: OpenAI, Claude, and Mock. Provider selection via `.env`. Reviewers with either OpenAI or Anthropic credits can run the full pipeline; the Mock provider lets anyone smoke-test the harness with zero spend.
 
 ## On scope
 
