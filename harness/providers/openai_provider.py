@@ -46,12 +46,19 @@ class OpenAIProvider:
         openai_messages = self._to_openai_messages(system, messages)
         openai_tools = self._to_openai_tools(tools) if tools else None
 
+        # GPT-5 reasoning models burn extra tokens on internal reasoning
+        # before producing output; the visible content budget needs headroom.
+        effective_max = max(max_tokens, 8000) if self.model.startswith("gpt-5") else max_tokens
+
         kwargs: Dict[str, Any] = {
             "model": self.model,
             "messages": openai_messages,
-            "max_tokens": max_tokens,
-            "temperature": temperature,
+            "max_completion_tokens": effective_max,
         }
+        # GPT-5 reasoning models do not accept arbitrary temperature; older
+        # models do. Only set temperature for non-gpt-5 models.
+        if not self.model.startswith("gpt-5"):
+            kwargs["temperature"] = temperature
         if openai_tools:
             kwargs["tools"] = openai_tools
             kwargs["tool_choice"] = "auto"

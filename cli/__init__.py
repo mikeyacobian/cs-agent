@@ -1,8 +1,5 @@
 """CLI entry points for the cs-agent harness.
 
-See cli.main for the actual command implementations.
+See `cli.main` for the actual command implementations. Invoke via:
+    python -m cli.main <command>
 """
-
-from cli.main import main
-
-__all__ = ["main"]
