@@ -1,0 +1,37 @@
+{
+  "C001": {
+    "name": "Jordan Rivera",
+    "tenure_months": 24,
+    "region": "northeast-boston",
+    "plan": "standard_internet_300mbps",
+    "monthly_price": 79.99,
+    "account_status": "active",
+    "recent_interactions": []
+  },
+  "C002": {
+    "name": "Sarah Kim",
+    "tenure_months": 14,
+    "region": "northeast-newyork",
+    "plan": "standard_internet_300mbps",
+    "monthly_price_current": 89.99,
+    "monthly_price_promo": 59.99,
+    "promo_expired_date": "2026-04-15",
+    "account_status": "active",
+    "recent_interactions": [
+      {
+        "date": "2026-05-15",
+        "type": "billing_inquiry",
+        "summary": "Customer asked about bill increase; told about promo expiry. No retention offer presented at that time."
+      }
+    ]
+  },
+  "C003": {
+    "name": "James Liu",
+    "tenure_months": 36,
+    "region": "southeast-atlanta",
+    "plan": "premium_internet_500mbps",
+    "monthly_price": 99.99,
+    "account_status": "active",
+    "recent_interactions": []
+  }
+}

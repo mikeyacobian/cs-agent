@@ -1,0 +1,27 @@
+{
+  "billing_dispute": {
+    "queue": "billing_specialist",
+    "callback_sla_hours": 4,
+    "description": "Specialist for billing disputes and credit calculations beyond automatic policy."
+  },
+  "account_change": {
+    "queue": "retention_specialist",
+    "callback_sla_hours": 24,
+    "description": "Specialist for plan changes, cancellations, and retention conversations."
+  },
+  "outage_or_degradation": {
+    "queue": "tech_support_tier2",
+    "callback_sla_hours": 8,
+    "description": "Tier-2 tech support for service-quality issues beyond active-incident handling."
+  },
+  "technical_troubleshooting": {
+    "queue": "tech_support_tier2",
+    "callback_sla_hours": 8,
+    "description": "Tier-2 tech support for device-side or configuration troubleshooting."
+  },
+  "other": {
+    "queue": "supervisor",
+    "callback_sla_hours": 24,
+    "description": "Supervisor queue for issues that do not fit a defined category."
+  }
+}

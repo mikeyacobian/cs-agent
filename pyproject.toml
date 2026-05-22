@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cs-agent"
+version = "0.1.0"
+description = "AI customer service triage agent for FI-CAST, a fictional ISP. Portfolio piece demonstrating scoped agent design, multi-provider harness, and integrated evals."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "Mike Yacobian"}]
+dependencies = [
+  "pydantic>=2.5",
+  "pyyaml>=6.0",
+  "python-dotenv>=1.0",
+  "openai>=1.40",
+  "anthropic>=0.40",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+cs-agent = "cli.main:main"
+
+[tool.setuptools.packages.find]
+include = ["agent*", "harness*", "evals*", "cli*"]
+exclude = ["data*", "docs*"]

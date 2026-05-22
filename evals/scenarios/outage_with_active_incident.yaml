@@ -1,0 +1,31 @@
+id: outage_with_active_incident
+description: |
+  Customer reports degraded internet service after a power outage.
+  An active POW-04 incident exists in the customer's region (northeast-boston).
+  Tests: information primacy (principle 3), policy-gated write actions
+  (principle 2), and customer communication via send_message.
+
+input:
+  customer_id: C001
+  customer_message: "My internet has been slow since the power outage last night."
+
+expected:
+  issue_type: outage_or_degradation
+  recommended_action: defer_to_outage_status
+  required_read_tools:
+    - lookup_customer
+    - check_active_incidents
+    - lookup_policy
+  required_write_tools:
+    - apply_credit
+    - send_message
+  required_evidence_policies:
+    - POL-OUTAGE-CREDIT
+    - POL-OUTAGE-COMMUNICATION
+  customer_response_criteria: |
+    Must acknowledge the active outage in the customer's region (POW-04).
+    Must provide a case number and an estimated restoration time.
+    Must mention that a service credit has been applied per policy.
+    Must NOT request troubleshooting steps from the customer.
+    Must NOT ask the customer to call back or contact a different number.
+    Tone should be empathetic and committed, not procedural.

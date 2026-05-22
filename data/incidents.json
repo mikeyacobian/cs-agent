@@ -1,0 +1,26 @@
+{
+  "active": [
+    {
+      "id": "POW-04",
+      "region": "northeast-boston",
+      "type": "power_related_degradation",
+      "started": "2026-05-21T03:00:00Z",
+      "eta_restoration": "2026-05-22T08:00:00Z",
+      "status": "in_progress",
+      "affected_services": ["internet", "tv"],
+      "summary": "Local power grid disturbance caused service degradation across affected nodes. Restoration crews on site; expected resolution by Friday 8 AM ET."
+    }
+  ],
+  "historical": [
+    {
+      "id": "INC-78",
+      "region": "southeast-atlanta",
+      "type": "fiber_cut",
+      "started": "2026-04-15T10:00:00Z",
+      "resolved": "2026-04-17T16:00:00Z",
+      "duration_days": 2,
+      "affected_services": ["internet"],
+      "summary": "Confirmed fiber cut affecting Atlanta southeast region. 2-day outage. Restoration complete; no auto-credit was applied at the time."
+    }
+  ]
+}

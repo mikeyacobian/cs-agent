@@ -1,6 +1,6 @@
 # cs-agent
 
-An AI customer service triage agent for **Connectifi**, a fictional ISP modeled on documented failure patterns at large ISPs (Comcast, Charter Spectrum, Cox). Built in a 2-hour sprint to demonstrate scoped agent design, observable runtime architecture, and eval-driven development.
+An AI customer service triage agent for **FI-CAST**, a fictional ISP modeled on documented failure patterns at large ISPs (Comcast, Charter Spectrum, Cox). Built in a 2-hour sprint to demonstrate scoped agent design, observable runtime architecture, and eval-driven development.
 
 > **Status:** In progress. Built in a single 2-hour session per the project brief.
 
@@ -24,7 +24,60 @@ The agent runs inside the harness in two modes: `run` (single scenario, trace on
 
 ## How to run
 
-_To be filled in at the end of the build with the actual commands. Expected entry points: `smoke` (no API key required, uses Mock provider), `run --scenario <id>` (real provider, single scenario), `eval` (full corpus + report)._
+### Install
+
+Requires Python 3.10+.
+
+```bash
+git clone https://github.com/mikeyacobian/cs-agent
+cd cs-agent
+python3.11 -m venv .venv
+.venv/bin/pip install --upgrade pip
+.venv/bin/pip install -e .
+```
+
+### Smoke test (no API keys required)
+
+Verifies the harness runs end to end with the Mock provider. Useful as the first thing you run after cloning.
+
+```bash
+.venv/bin/python -m cli.main smoke
+```
+
+You should see `[smoke] OK: harness end-to-end works.` plus a trace path.
+
+### Configure providers
+
+Copy the example env file and pick the providers/keys you have:
+
+```bash
+cp .env.example .env
+# edit .env:
+#   AGENT_PROVIDER=openai | claude | mock
+#   JUDGE_PROVIDER=openai | claude | mock
+#   OPENAI_API_KEY=...     (only if any provider above is openai)
+#   ANTHROPIC_API_KEY=...  (only if any provider above is claude)
+```
+
+Defaults are cross-tier within OpenAI (`gpt-4o-mini` agent, `gpt-4o` judge). Mock works with no keys for grader and smoke iteration.
+
+### Run one scenario
+
+```bash
+.venv/bin/python -m cli.main run --scenario outage_with_active_incident
+.venv/bin/python -m cli.main run --scenario cancellation_post_promo
+.venv/bin/python -m cli.main run --scenario credit_for_past_outage
+```
+
+Writes a trace to `traces/` and prints the agent's structured output.
+
+### Full eval
+
+```bash
+.venv/bin/python -m cli.main eval
+```
+
+Runs every scenario, applies six graders to each, writes a markdown report to `reports/`. Open the report in your editor to see per-scenario pass/fail breakdowns.
 
 ## On provider abstraction
 
@@ -40,4 +93,4 @@ MIT. See [LICENSE](./LICENSE).
 
 ## On fiction
 
-Connectifi is fictional. Its CS challenges are modeled on documented patterns at large ISPs per public research and personal experience. No real customer data, employee names, or internal policies appear anywhere in this repo.
+FI-CAST is fictional. Its CS challenges are modeled on documented patterns at large ISPs per public research and personal experience. No real customer data, employee names, or internal policies appear anywhere in this repo.

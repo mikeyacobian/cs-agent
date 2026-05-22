@@ -4,7 +4,7 @@ This file orients Claude Code sessions on this project. Read at session start.
 
 ## What this project is
 
-An AI customer service triage agent for **Connectifi**, a fictional ISP modeled on documented failure patterns at large ISPs (Comcast, Charter Spectrum, Cox). Portfolio piece for a Lead PM interview. Built in a 2-hour sprint per the hiring manager's prompt. Deliverables: working agent, repo, 5-minute video walkthrough.
+An AI customer service triage agent for **FI-CAST**, a fictional ISP modeled on documented failure patterns at large ISPs (Comcast, Charter Spectrum, Cox). Portfolio piece for a Lead PM interview. Built in a 2-hour sprint per the hiring manager's prompt. Deliverables: working agent, repo, 5-minute video walkthrough.
 
 The artifacts are intended to be shareable and held to portfolio quality. No content from prior employment, private projects, or internal company context can leak through.
 
@@ -27,11 +27,11 @@ If Claude finds itself writing prose that explains Mike's reasoning rather than 
 - **No labeled openers** ("Quick note:", "Heads up:"). Lead with substance.
 - **Cite sources in design artifacts.** Public research only (ACSI, JD Power, Consumer Reports, named industry studies). Personal experience allowed but flagged.
 - **First-principles harness.** We build our own in `harness/`. `DESIGN.md` notes the Claude Agent SDK and Pi exist and were considered; explains why we built our own.
-- **Provider abstraction is mandatory.** All model calls go through one `ModelProvider` interface in `harness/providers/`. Three implementations: OpenAI (real), Mock (real), Claude (stub for this build).
+- **Provider abstraction is mandatory.** All model calls go through one `ModelProvider` interface in `harness/providers/`. Three real implementations: OpenAI, Claude, Mock. Reviewer with either OpenAI or Anthropic credentials can run the full pipeline; Mock enables zero-spend smoke testing.
 - **Mock provider exists for zero-spend smoke testing.** The harness must run end to end with no API keys via the Mock provider.
 - **No vendor names outside `harness/providers/`.** Code elsewhere never imports `anthropic`, `openai`, or any other SDK class.
 - **No hardcoded API keys.** SDK defaults handle key reading; `.env` is gitignored.
-- **Agent is read-only.** No write tools. Agent recommends actions; humans or downstream systems execute.
+- **Agent has policy-gated write authority.** Three write tools (`apply_credit`, `schedule_callback`, `send_message`) require a `policy_id` parameter. The harness validates that the cited policy authorizes the action. Write side-effects are mocked in this build (logged in trace, not persisted). Discretion beyond policy (Layer 2) is out of scope.
 - **Anthropic vocabulary in eval terminology.** "Code-based graders" and "model-based graders" (not "deterministic" and "model-graded").
 
 ## Architecture
@@ -50,5 +50,5 @@ The agent runs inside the harness. The evals also run inside the harness. The ha
 
 - License: MIT (see LICENSE)
 - Repo will be pushed to GitHub at the end of the build
-- Fictional company: Connectifi (Comcast-analog ISP)
-- Provider credits: OpenAI only. Demo uses cross-tier OpenAI (stronger judge grading weaker agent). Cross-vendor judging is shipped architecturally but not demo'd.
+- Fictional company: FI-CAST (Comcast-analog ISP)
+- Provider credits available to the author: OpenAI. Demo uses cross-tier OpenAI (stronger judge grading weaker agent). Cross-vendor judging (Claude judge over OpenAI agent, or vice versa) is shipped as a one-env-var override; reviewers with both keys can flip in seconds.

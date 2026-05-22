@@ -1,0 +1,40 @@
+id: credit_for_past_outage
+description: |
+  Customer claims 3 days of outage last month and wants a credit.
+  Documented historical incident INC-78 in customer's region was 2 days
+  (fiber cut, 2026-04-15 to 2026-04-17).
+  Policy POL-OUTAGE-CREDIT: $10/day for documented outage days, max $50.
+  Tests: policy-correct calculation (principles 2 and 4). Agent must verify,
+  apply the policy-correct amount ($20 = 2 days x $10), not the customer's
+  claim ($30 would be 3 days) and not zero.
+
+input:
+  customer_id: C003
+  customer_message: "I had no internet for 3 days last month. I want a credit."
+
+expected:
+  issue_type: billing_dispute
+  recommended_action: apply_credit
+  required_read_tools:
+    - lookup_customer
+    - get_billing_history
+    - check_active_incidents
+    - lookup_policy
+  required_write_tools:
+    - apply_credit
+    - send_message
+  required_evidence_policies:
+    - POL-OUTAGE-CREDIT
+  expected_credit_amount: 20
+  customer_response_criteria: |
+    Must acknowledge the historical outage (INC-78) in the customer's region.
+    Must explain the credit calculation: 2 documented outage days x $10/day = $20.
+    Must address the discrepancy between the customer's claim (3 days) and the
+    documented duration (2 days) honestly and respectfully. Do not be defensive
+    or accusatory.
+    Must mention that the credit has been applied to the account.
+    Must NOT apply more than $20 (would exceed policy authorization).
+    Must NOT decline entirely (would create churn risk and ignore policy that
+    permits credit).
+    Must NOT accept the customer's "3 days" claim without verification.
+    Tone should be confident, evidence-based, and customer-respecting.

@@ -9,7 +9,9 @@ venv/
 .env
 .env.local
 
-# Eval runs (always local, never shared)
+# Trace and report outputs (always local, never committed)
+traces/
+reports/
 evals/runs/
 
 # Raw research notes (local-only; polished outputs live in product/)

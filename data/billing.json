@@ -1,0 +1,26 @@
+{
+  "C001": {
+    "last_3_months": [
+      {"month": "2026-03", "charge": 79.99, "credits_applied": 0, "status": "paid"},
+      {"month": "2026-04", "charge": 79.99, "credits_applied": 0, "status": "paid"},
+      {"month": "2026-05", "charge": 79.99, "credits_applied": 0, "status": "paid"}
+    ],
+    "current_balance": 0.00
+  },
+  "C002": {
+    "last_3_months": [
+      {"month": "2026-03", "charge": 59.99, "credits_applied": 0, "status": "paid", "note": "promo rate"},
+      {"month": "2026-04", "charge": 89.99, "credits_applied": 0, "status": "paid", "note": "promo expired mid-cycle"},
+      {"month": "2026-05", "charge": 89.99, "credits_applied": 0, "status": "open", "note": "current bill, customer disputing"}
+    ],
+    "current_balance": 89.99
+  },
+  "C003": {
+    "last_3_months": [
+      {"month": "2026-03", "charge": 99.99, "credits_applied": 0, "status": "paid"},
+      {"month": "2026-04", "charge": 99.99, "credits_applied": 0, "status": "paid", "note": "INC-78 outage in region during this period; no automatic credit was applied"},
+      {"month": "2026-05", "charge": 99.99, "credits_applied": 0, "status": "paid"}
+    ],
+    "current_balance": 0.00
+  }
+}

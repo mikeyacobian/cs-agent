@@ -1,0 +1,55 @@
+{
+  "POL-OUTAGE-CREDIT": {
+    "id": "POL-OUTAGE-CREDIT",
+    "applicable_issue_types": ["outage_or_degradation", "billing_dispute"],
+    "summary": "Service credit for confirmed outages.",
+    "rule": "For confirmed outages (active or historical) affecting a customer's region, apply credit of $10 per documented outage day, up to $50 maximum. For active outages with ongoing impact, prorate based on expected restoration ETA (default minimum 1 day = $10). Customer's verbal claim alone is not sufficient; outage must be present in check_active_incidents (current or historical).",
+    "authorized_actions": [
+      {
+        "action": "apply_credit",
+        "amount_max": 50,
+        "amount_formula": "10 * documented_outage_days",
+        "requires_documented_outage": true
+      }
+    ]
+  },
+  "POL-OUTAGE-COMMUNICATION": {
+    "id": "POL-OUTAGE-COMMUNICATION",
+    "applicable_issue_types": ["outage_or_degradation"],
+    "summary": "Customer communication during active outages.",
+    "rule": "When deferring to active outage status, send case number, current restoration ETA, and status page link via send_message. Do not walk the customer through troubleshooting when an active incident is already identified in their region.",
+    "authorized_actions": [
+      {
+        "action": "send_message",
+        "template_id": "outage_acknowledgment"
+      }
+    ]
+  },
+  "POL-CANCELLATION": {
+    "id": "POL-CANCELLATION",
+    "applicable_issue_types": ["account_change"],
+    "summary": "Cancellation requests.",
+    "rule": "Process cancellation requests cleanly. For customers with 12+ months tenure, present POL-LOYALTY-DISCOUNT as an alternative neutrally alongside the cancellation path. Do not pressure-retain. If customer chooses cancellation, schedule_callback to retention_specialist for confirmation and offboarding.",
+    "authorized_actions": [
+      {
+        "action": "schedule_callback",
+        "queue": "retention_specialist"
+      }
+    ]
+  },
+  "POL-LOYALTY-DISCOUNT": {
+    "id": "POL-LOYALTY-DISCOUNT",
+    "applicable_issue_types": ["account_change"],
+    "summary": "Loyalty discount for tenured customers.",
+    "rule": "Customers with 12+ months tenure are eligible for a $20/month discount for 6 months. Agent may present this option alongside cancellation. Customer must explicitly accept; agent does not apply unilaterally. Discount applies via recurring apply_credit (monthly).",
+    "authorized_actions": [
+      {
+        "action": "apply_credit",
+        "amount_per_month": 20,
+        "duration_months": 6,
+        "requires_customer_confirmation": true,
+        "requires_tenure_months_min": 12
+      }
+    ]
+  }
+}
