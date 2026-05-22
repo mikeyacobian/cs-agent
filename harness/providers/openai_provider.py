@@ -56,6 +56,11 @@ class OpenAIProvider:
             kwargs["tools"] = openai_tools
             kwargs["tool_choice"] = "auto"
 
+        # Force JSON object output. This applies to the model's TEXT response;
+        # tool calls are unaffected. Requires the word "JSON" in the prompt
+        # (the system prompt's "## Output" section satisfies this).
+        kwargs["response_format"] = {"type": "json_object"}
+
         t0 = time.time()
         completion = self._client.chat.completions.create(**kwargs)
         latency_ms = int((time.time() - t0) * 1000)
